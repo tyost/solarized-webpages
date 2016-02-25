@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name        Solarized All The Things
+// @name        Solarized Webpages
 // @namespace   tyost
 // @description Adjusts websites to fit the Solarized color palette.
 // @include     *
