@@ -28,8 +28,6 @@
   setupDefaultConfiguration();
 
 
-  var USE_LIGHT = false;
-
   var SOLARIZED_PALETTE = {
     BASE03:   '#002b36',   // Darker
     BASE02:   '#073642',
