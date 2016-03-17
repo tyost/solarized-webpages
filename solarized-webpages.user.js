@@ -73,6 +73,7 @@
     ' background-color: ' + COLORS.BACKGROUND + ' !important;' +
     ' border-color: rgba(0, 0, 0, 0) !important;' +
     ' color: ' + COLORS.BODY_TEXT + ' !important;' +
+    ' text-shadow: none !important' +
     '}' +
 
     'div[background-color], button, input {' +
