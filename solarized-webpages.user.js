@@ -70,13 +70,17 @@
 
   GM_addStyle(
     '* {' +
-    ' background-color: ' + COLORS.BACKGROUND + ' !important;' +
+    ' background-color: transparent !important;' +
     ' border-color: rgba(0, 0, 0, 0) !important;' +
     ' color: ' + COLORS.BODY_TEXT + ' !important;' +
     ' text-shadow: none !important' +
     '}' +
 
-    'div[background-color], applet, button, code, command, datalist, details, ' +
+    'body {' +
+    ' background-color: ' + COLORS.BACKGROUND + ' !important;' +
+    '}' +
+
+    'applet, button, code, command, datalist, details, ' +
     'dialog, dir, frame, frameset, input, isindex, keygen, label, legend, ' +
     'listing, menu, menuitem, meter, optgroup, option, output, pre, progress, ' +
     'select, summary, textarea {' +
