@@ -76,7 +76,10 @@
     ' text-shadow: none !important' +
     '}' +
 
-    'div[background-color], button, input {' +
+    'div[background-color], applet, button, code, command, datalist, details, ' +
+    'dialog, dir, frame, frameset, input, isindex, keygen, label, legend, ' +
+    'listing, menu, menuitem, meter, optgroup, option, output, pre, progress, ' +
+    'select, summary, textarea {' +
     ' background-color: ' + COLORS.BACKGROUND_HIGHLIGHT + ' !important;' +
     ' opacity: 1 !important' +
     '}' +
