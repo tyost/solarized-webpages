@@ -10,12 +10,12 @@
 // @grant       GM_getValue
 // ==/UserScript==
 
-// ======================================
-// Script for each page.
-// ======================================
-
 (function() {
   'use strict';
+
+  //======================================
+  // Set defaults for missing configuration settings.
+  //======================================
 
   var setDefault = function(setting, defaultValue) {
     GM_setValue(setting, GM_getValue(setting, defaultValue));
@@ -27,6 +27,36 @@
 
   setupDefaultConfiguration();
 
+  //======================================
+  // Mark elements on the page that cannot be selected by CSS alone.
+  //======================================
+
+  // Using data attributes rather than classes as they won't break brittle
+  // class logic on sites.
+  // For example, some sites might only use one class on a particular
+  // element. As a result, they compare the entire class string against one
+  // class name. That code would break if we added another class.
+
+  var markIfHasBackgroundColor = function(element) {
+    if (window.getComputedStyle(element, null)
+          .getPropertyValue('background-color')) {
+      element.setAttribute('data-has-background-color-before-solarized', '');
+    }
+  };
+
+  var markElementsForCSS = function() {
+    var allElements = document.getElementsByTagName('*');
+
+    for (var i = allElements.length; i--;) {
+      markIfHasBackgroundColor(allElements[i]);
+    }
+  };
+
+  markElementsForCSS();
+
+  //======================================
+  // Recolor the page with CSS.
+  //======================================
 
   var SOLARIZED_PALETTE = {
     BASE03:   '#002b36',   // Darker
@@ -70,13 +100,13 @@
 
   GM_addStyle(
     '* {' +
-    ' background-color: transparent !important;' +
     ' border-color: rgba(0, 0, 0, 0) !important;' +
     ' color: ' + COLORS.BODY_TEXT + ' !important;' +
     ' text-shadow: none !important;' +
     '}' +
 
-    'body {' +
+    'html body, ' +
+    '[data-has-background-color-before-solarized] {' +
     ' background-color: ' + COLORS.BACKGROUND + ' !important;' +
     '}' +
 
