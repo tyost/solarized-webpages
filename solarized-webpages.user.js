@@ -73,7 +73,7 @@
     ' background-color: transparent !important;' +
     ' border-color: rgba(0, 0, 0, 0) !important;' +
     ' color: ' + COLORS.BODY_TEXT + ' !important;' +
-    ' text-shadow: none !important' +
+    ' text-shadow: none !important;' +
     '}' +
 
     'body {' +
@@ -85,7 +85,7 @@
     'listing, menu, menuitem, meter, optgroup, option, output, pre, progress, ' +
     'select, summary, textarea {' +
     ' background-color: ' + COLORS.BACKGROUND_HIGHLIGHT + ' !important;' +
-    ' opacity: 1 !important' +
+    ' opacity: 1 !important;' +
     '}' +
 
     'h1, h2, h3, h4, h5, h6, header, hgroup, thead,' +
