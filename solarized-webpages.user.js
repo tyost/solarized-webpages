@@ -37,9 +37,20 @@ var onLoad = function() {
   // element. As a result, they compare the entire class string against one
   // class name. That code would break if we added another class.
 
+  var COLOR_GRADIENT_REGEX =
+      /^(-(moz|ms|o|webkit)-)?(linear-gradient|repeating-linear-gradient|radial-gradient|repeating-radial-gradient)/;
+
+  var isColorGradient = function(value) {
+    return COLOR_GRADIENT_REGEX.test(value);
+  };
+
+
   var markIfHasBackgroundColor = function(element, computedStyle) {
     var backgroundImage = computedStyle.getPropertyValue('background-image');
-    if (backgroundImage && backgroundImage !== 'none') {
+console.log(backgroundImage);
+    if (backgroundImage && backgroundImage !== 'none' &&
+          !isColorGradient(backgroundImage)) {
+console.log('returning');
       return;
     }
 
