@@ -43,7 +43,8 @@
       return;
     }
 
-    if (computedStyle.getPropertyValue('background-color')) {
+    var backgroundColor = computedStyle.getPropertyValue('background-color');
+    if (backgroundColor && backgroundColor !== 'transparent') {
       element.setAttribute('data-has-background-color-before-solarized', '');
     }
   };
