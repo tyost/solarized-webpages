@@ -124,6 +124,7 @@ var onLoad = function() {
     'html body, ' +
     '[data-has-background-color-before-solarized] {' +
     ' background-color: ' + COLORS.BACKGROUND + ' !important;' +
+    ' background-image: none !important;' +
     '}' +
 
     'applet, button, code, command, datalist, details, ' +
