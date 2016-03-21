@@ -47,10 +47,9 @@ var onLoad = function() {
 
   var markIfHasBackgroundColor = function(element, computedStyle) {
     var backgroundImage = computedStyle.getPropertyValue('background-image');
-console.log(backgroundImage);
+
     if (backgroundImage && backgroundImage !== 'none' &&
           !isColorGradient(backgroundImage)) {
-console.log('returning');
       return;
     }
 
