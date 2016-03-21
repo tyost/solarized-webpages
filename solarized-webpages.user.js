@@ -37,9 +37,13 @@
   // element. As a result, they compare the entire class string against one
   // class name. That code would break if we added another class.
 
-  var markIfHasBackgroundColor = function(element) {
-    if (window.getComputedStyle(element, null)
-          .getPropertyValue('background-color')) {
+  var markIfHasBackgroundColor = function(element, computedStyle) {
+    var backgroundImage = computedStyle.getPropertyValue('background-image');
+    if (backgroundImage && backgroundImage !== 'none') {
+      return;
+    }
+
+    if (computedStyle.getPropertyValue('background-color')) {
       element.setAttribute('data-has-background-color-before-solarized', '');
     }
   };
@@ -48,7 +52,8 @@
     var allElements = document.getElementsByTagName('*');
 
     for (var i = allElements.length; i--;) {
-      markIfHasBackgroundColor(allElements[i]);
+      var element = allElements[i];
+      markIfHasBackgroundColor(element, window.getComputedStyle(element, null));
     }
   };
 
