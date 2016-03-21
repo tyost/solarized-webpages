@@ -10,7 +10,7 @@
 // @grant       GM_getValue
 // ==/UserScript==
 
-(function() {
+var onLoad = function() {
   'use strict';
 
   //======================================
@@ -226,5 +226,5 @@
   if (getUrl() === CONFIG_FORM_URL && !scriptAlreadyRan()) {
     setupForm();
   }
-
-})();
+};
+window.addEventListener("load", onLoad);
