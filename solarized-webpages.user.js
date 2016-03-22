@@ -177,36 +177,44 @@ var onLoad = function() {
   // Recolor the page with CSS.
   //======================================
 
-  GM_addStyle(
-    '* {' +
-    ' border-color: rgba(0, 0, 0, 0) !important;' +
-    ' color: ' + COLORS.BODY_TEXT + ' !important;' +
-    ' text-shadow: none !important;' +
-    '}' +
+  var getGenericCss = function() {
+    return  '* {' +
+            ' border-color: rgba(0, 0, 0, 0) !important;' +
+            ' color: ' + COLORS.BODY_TEXT + ' !important;' +
+            ' text-shadow: none !important;' +
+            '}' +
 
-    'html body, ' +
-    '[data-has-background-color-before-solarized] {' +
-    ' background-color: ' + COLORS.BACKGROUND + ' !important;' +
-    ' background-image: none !important;' +
-    '}' +
+            'html body, ' +
+            '[data-has-background-color-before-solarized] {' +
+            ' background-color: ' + COLORS.BACKGROUND + ' !important;' +
+            ' background-image: none !important;' +
+            '}' +
 
-    'applet, button, code, command, datalist, details, ' +
-    'dialog, dir, frame, frameset, input, isindex, keygen, legend, ' +
-    'listing, menu, menuitem, meter, optgroup, option, output, pre, progress, ' +
-    'select, summary, textarea {' +
-    ' background-color: ' + COLORS.BACKGROUND_HIGHLIGHT + ' !important;' +
-    ' opacity: 1 !important;' +
-    '}' +
+            'h1, h2, h3, h4, h5, h6, header, hgroup, thead,' +
+            'h1 *, h2 *, h3 *, h4 *, h5 *, h6 *, header *, hgroup *, thead * {' +
+            ' color: ' + COLORS.HEADINGS + ' !important;' +
+            '}' +
 
-    'h1, h2, h3, h4, h5, h6, header, hgroup, thead,' +
-    'h1 *, h2 *, h3 *, h4 *, h5 *, h6 *, header *, hgroup *, thead * {' +
-    ' color: ' + COLORS.HEADINGS + ' !important;' +
-    '}' +
+            'a {' +
+            ' color: ' + COLORS.HYPERLINKS + ' !important;' +
+            '}';
+  };
 
-    'a {' +
-    ' color: ' + COLORS.HYPERLINKS + ' !important;' +
-    '}'
-  );
+  var getHighlightCss = function() {
+    return  'applet, button, code, command, datalist, details, ' +
+            'dialog, dir, frame, frameset, input:not([a]), input[a], isindex, keygen, legend, ' +
+            'listing, menu, menuitem, meter, optgroup, option, output, pre, progress, ' +
+            'select, summary, textarea {' +
+            ' background-color: ' + COLORS.BACKGROUND_HIGHLIGHT + ' !important;' +
+            ' opacity: 1 !important;' +
+            '}';
+  };
+
+  var getAllCss = function() {
+    return getGenericCss() + getHighlightCss();
+  };
+
+  GM_addStyle(getAllCss());
 
   //======================================
   // Configuration page to edit the script's settings.
