@@ -143,6 +143,37 @@ var onLoad = function() {
   setHtmlIdIfMissing();
 
   //======================================
+  // Functions controlling the specificity (precedence) of CSS code.
+  //======================================
+
+  var buildIdSelector = function(id) {
+    return '#' + id;
+  };
+
+  var buildIdSelectorWithSpecificity = function(id, amount) {
+    return buildIdSelector(id).repeat(amount);
+  };
+
+  var getSubstringBefore = function(s, character) {
+    return s.substring(0, s.indexOf(character));
+  };
+
+  var insertBeforeAllSelectors = function(css, extraSelector) {
+    var selectorCss = getSubstringBefore(css, '{');
+    var newSelectorCss = selectorCss.replace(/([^,]+)(,|$)/g, extraSelector + ' $1$2');
+    return css.replace(selectorCss, newSelectorCss);
+  };
+
+  var increaseAllSpecificity = function(css, amount) {
+    // Insert a repeated ID before each CSS selector to artificially raise
+    // its specificity by the specified amount.
+    // For example, #solarizedHtml54321#solarizedHtml54321 p
+    // raises the id specificity by two.
+    var extraSelector = buildIdSelectorWithSpecificity(getHtmlId(), amount);
+    return insertBeforeAllSelectors(css, extraSelector);
+  };
+
+  //======================================
   // Recolor the page with CSS.
   //======================================
 
