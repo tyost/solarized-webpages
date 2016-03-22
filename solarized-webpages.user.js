@@ -59,7 +59,7 @@ var onLoad = function() {
     }
   };
 
-  var markElementForCss = function() {
+  var markElementsForCss = function() {
     var allElements = document.getElementsByTagName('*');
 
     for (var i = allElements.length; i--;) {
@@ -68,7 +68,7 @@ var onLoad = function() {
     }
   };
 
-  markElementForCss();
+  markElementsForCss();
 
   //======================================
   // Recolor the page with CSS.
