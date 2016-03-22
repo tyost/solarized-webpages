@@ -177,41 +177,59 @@ var onLoad = function() {
   // Recolor the page with CSS.
   //======================================
 
+  var GENERIC_SPECIFICITY = 50;
+  var HIGHLIGHT_SPECIFICITY = GENERIC_SPECIFICITY + 1;
+
   var getGenericCss = function() {
-    return  '* {' +
-            ' border-color: rgba(0, 0, 0, 0) !important;' +
-            ' color: ' + COLORS.BODY_TEXT + ' !important;' +
-            ' text-shadow: none !important;' +
-            '}' +
+    var css = '* {' +
+              ' border-color: rgba(0, 0, 0, 0) !important;' +
+              ' color: ' + COLORS.BODY_TEXT + ' !important;' +
+              ' text-shadow: none !important;' +
+              '}';
+    return increaseAllSpecificity(css, GENERIC_SPECIFICITY);
+  };
 
-            'html body, ' +
-            '[data-has-background-color-before-solarized] {' +
-            ' background-color: ' + COLORS.BACKGROUND + ' !important;' +
-            ' background-image: none !important;' +
-            '}' +
+  var getColoredBackgroundCss = function() {
+    var css = 'html body, ' +
+              '[data-has-background-color-before-solarized] {' +
+              ' background-color: ' + COLORS.BACKGROUND + ' !important;' +
+              ' background-image: none !important;' +
+              '}';
+    return increaseAllSpecificity(css, GENERIC_SPECIFICITY);
+  };
 
-            'h1, h2, h3, h4, h5, h6, header, hgroup, thead,' +
-            'h1 *, h2 *, h3 *, h4 *, h5 *, h6 *, header *, hgroup *, thead * {' +
-            ' color: ' + COLORS.HEADINGS + ' !important;' +
-            '}' +
+  var getHeadingCss = function() {
+    var css = 'h1, h2, h3, h4, h5, h6, header, hgroup, thead,' +
+              'h1 *, h2 *, h3 *, h4 *, h5 *, h6 *, header *, hgroup *, thead * {' +
+              ' color: ' + COLORS.HEADINGS + ' !important;' +
+              '}';
+    return increaseAllSpecificity(css, GENERIC_SPECIFICITY);
+  };
 
-            'a {' +
-            ' color: ' + COLORS.HYPERLINKS + ' !important;' +
-            '}';
+  var getHyperlinkCss = function() {
+    var css = 'a {' +
+              ' color: ' + COLORS.HYPERLINKS + ' !important;' +
+              '}';
+    return increaseAllSpecificity(css, GENERIC_SPECIFICITY);
   };
 
   var getHighlightCss = function() {
-    return  'applet, button, code, command, datalist, details, ' +
-            'dialog, dir, frame, frameset, input:not([a]), input[a], isindex, keygen, legend, ' +
-            'listing, menu, menuitem, meter, optgroup, option, output, pre, progress, ' +
-            'select, summary, textarea {' +
-            ' background-color: ' + COLORS.BACKGROUND_HIGHLIGHT + ' !important;' +
-            ' opacity: 1 !important;' +
-            '}';
+    var css = 'applet, button, code, command, datalist, details, ' +
+              'dialog, dir, frame, frameset, input:not([a]), input[a], isindex, keygen, legend, ' +
+              'listing, menu, menuitem, meter, optgroup, option, output, pre, progress, ' +
+              'select, summary, textarea {' +
+              ' background-color: ' + COLORS.BACKGROUND_HIGHLIGHT + ' !important;' +
+              ' opacity: 1 !important;' +
+              '}';
+    return increaseAllSpecificity(css, HIGHLIGHT_SPECIFICITY);
   };
 
   var getAllCss = function() {
-    return getGenericCss() + getHighlightCss();
+    return  getGenericCss() +
+            getColoredBackgroundCss() +
+            getHeadingCss() +
+            getHyperlinkCss() +
+            getHighlightCss();
   };
 
   GM_addStyle(getAllCss());
