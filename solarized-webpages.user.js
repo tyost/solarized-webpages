@@ -71,7 +71,7 @@ var onLoad = function() {
   markElementsForCss();
 
   //======================================
-  // Recolor the page with CSS.
+  // Colors.
   //======================================
 
   var SOLARIZED_PALETTE = {
@@ -113,6 +113,38 @@ var onLoad = function() {
   // Color settings shared between light and dark.
   COLORS.HEADINGS = SOLARIZED_PALETTE.YELLOW;
   COLORS.HYPERLINKS = SOLARIZED_PALETTE.BLUE;
+
+  //======================================
+  // Setup elements needed to control specificity (precedence) of CSS code.
+  //======================================
+
+  var getHtmlElement = function() {
+    return document.getElementsByTagName('html')[0];
+  };
+
+  var getHtmlId = function() {
+    return getHtmlElement().getAttribute('id');
+  };
+
+  var isOnlyWhitespace = function(s) {
+    return /^\s*$/.test(s);
+  };
+
+  var DEFAULT_HTML_ID = 'solarizedHtml54321';
+
+  var setHtmlIdIfMissing = function() {
+    var htmlId = getHtmlId();
+
+    if (!htmlId || isOnlyWhitespace(htmlId)) {
+      getHtmlElement().setAttribute('id', DEFAULT_HTML_ID);
+    }
+  };
+
+  setHtmlIdIfMissing();
+
+  //======================================
+  // Recolor the page with CSS.
+  //======================================
 
   GM_addStyle(
     '* {' +
