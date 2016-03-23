@@ -226,7 +226,7 @@ var onLoad = function() {
   };
 
   var getInteractiveElementCss = function() {
-    var css = 'applet, button, command, datalist, details, ' +
+    var css = 'a, applet, button, command, datalist, details, ' +
               'dialog, dir, input, isindex, keygen, ' +
               'listing, menu, menuitem, meter, optgroup, option, output, ' +
               'select, summary, textarea, ' +
