@@ -215,7 +215,7 @@ var onLoad = function() {
 
   var getHighlightCss = function() {
     var css = 'applet, button, code, command, datalist, details, ' +
-              'dialog, dir, frame, frameset, input:not([a]), input[a], isindex, keygen, legend, ' +
+              'dialog, dir, frame, frameset, input, isindex, keygen, legend, ' +
               'listing, menu, menuitem, meter, optgroup, option, output, pre, progress, ' +
               'select, summary, textarea {' +
               ' background-color: ' + COLORS.BACKGROUND_HIGHLIGHT + ' !important;' +
