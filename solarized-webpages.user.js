@@ -113,6 +113,7 @@ var onLoad = function() {
   // Color settings shared between light and dark.
   COLORS.HEADINGS = SOLARIZED_PALETTE.YELLOW;
   COLORS.HYPERLINKS = SOLARIZED_PALETTE.BLUE;
+  COLORS.INTERACTIVE_ELEMENT_BORDER = SOLARIZED_PALETTE.CYAN;
 
   //======================================
   // Setup elements needed to control specificity (precedence) of CSS code.
@@ -224,12 +225,26 @@ var onLoad = function() {
     return increaseAllSpecificity(css, HIGHLIGHT_SPECIFICITY);
   };
 
+  var getInteractiveElementCss = function() {
+    var css = 'applet, button, command, datalist, details, ' +
+              'dialog, dir, input, isindex, keygen, ' +
+              'listing, menu, menuitem, meter, optgroup, option, output, ' +
+              'select, summary, textarea, ' +
+              '[role="button"], [role="checkbox"], [role="radio"], ' +
+              '[role="scrollbar"], [role="slider"], [role="spinbutton"], ' +
+              '[role="switch"], [role="textbox"] {' +
+              ' border: 1px dotted ' + COLORS.INTERACTIVE_ELEMENT_BORDER + ' !important;' +
+              '}';
+    return increaseAllSpecificity(css, HIGHLIGHT_SPECIFICITY);
+  };
+
   var getAllCss = function() {
     return  getGenericCss() +
             getColoredBackgroundCss() +
             getHeadingCss() +
             getHyperlinkCss() +
-            getHighlightCss();
+            getHighlightCss() +
+            getInteractiveElementCss();
   };
 
   GM_addStyle(getAllCss());
