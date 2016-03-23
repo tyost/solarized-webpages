@@ -177,7 +177,7 @@ var onLoad = function() {
   // Recolor the page with CSS.
   //======================================
 
-  var GENERIC_SPECIFICITY = 50;
+  var GENERIC_SPECIFICITY = 15;
   var HIGHLIGHT_SPECIFICITY = GENERIC_SPECIFICITY + 1;
 
   var getGenericCss = function() {
