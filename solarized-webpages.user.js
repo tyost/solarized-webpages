@@ -183,7 +183,7 @@ var onLoad = function() {
 
   var getGenericCss = function() {
     var css = '* {' +
-              ' border-color: rgba(0, 0, 0, 0) !important;' +
+              ' border-color: ' + COLORS.BACKGROUND_HIGHLIGHT + ' !important;' +
               ' color: ' + COLORS.BODY_TEXT + ' !important;' +
               ' text-shadow: none !important;' +
               '}';
