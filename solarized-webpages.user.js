@@ -191,7 +191,7 @@ var onLoad = function() {
   };
 
   var getColoredBackgroundCss = function() {
-    var css = 'html body, ' +
+    var css = 'body, ' +
               '[data-has-background-color-before-solarized] {' +
               ' background-color: ' + COLORS.BACKGROUND + ' !important;' +
               ' background-image: none !important;' +
