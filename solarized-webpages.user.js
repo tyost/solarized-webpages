@@ -76,6 +76,52 @@ var onLoad = function() {
   markElementsForCss();
 
   //======================================
+  // Functions for retrieving certain DOM elements.
+  //======================================
+
+  var getHtmlElement = function() {
+    return document.getElementsByTagName('html')[0];
+  };
+
+  //======================================
+  // Re-scan and mark the page when something changes that might affect styles.
+  //======================================
+
+  var registerForDomChange = function(callback) {
+    var observer = new MutationObserver(callback);
+    var observerSettings = {
+      attributes: true,
+      characterData: true,
+      childList: true,
+      subtree: true,
+    };
+    observer.observe(getHtmlElement(), observerSettings);
+  };
+
+  // Time in miliseconds to wait before scanning and marking when scheduled.
+  var REMARK_DELAY = 100;
+
+  var remarkTimeoutId = false;
+
+  var scheduleRemarking = function() {
+    if (!remarkTimeoutId) {
+      remarkTimeoutId = window.setTimeout(
+        function() {
+          markElementsForCss();
+          remarkTimeoutId = false;
+        },
+        REMARK_DELAY
+      );
+    }
+  };
+
+  var setupRemarking = function() {
+    registerForDomChange(scheduleRemarking);
+  };
+
+  setupRemarking();
+
+  //======================================
   // Colors.
   //======================================
 
@@ -123,10 +169,6 @@ var onLoad = function() {
   //======================================
   // Setup elements needed to control specificity (precedence) of CSS code.
   //======================================
-
-  var getHtmlElement = function() {
-    return document.getElementsByTagName('html')[0];
-  };
 
   var getHtmlId = function() {
     return getHtmlElement().getAttribute('id');
