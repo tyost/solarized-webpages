@@ -391,4 +391,4 @@ var onLoad = function() {
     setupForm();
   }
 };
-window.addEventListener("load", onLoad);
+window.addEventListener("DOMContentLoaded", onLoad);
