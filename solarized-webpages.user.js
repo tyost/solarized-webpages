@@ -44,6 +44,11 @@ var onLoad = function() {
     return COLOR_GRADIENT_REGEX.test(value);
   };
 
+  var setAttributeIfDifferent = function(element, attribute, value) {
+    if (element.getAttribute(attribute) != value) {
+      element.setAttribute(attribute, value);
+    }
+  };
 
   var markIfHasBackgroundColor = function(element, computedStyle) {
     var backgroundImage = computedStyle.getPropertyValue('background-image');
@@ -55,7 +60,7 @@ var onLoad = function() {
 
     var backgroundColor = computedStyle.getPropertyValue('background-color');
     if (backgroundColor && backgroundColor !== 'transparent') {
-      element.setAttribute('data-has-background-color-before-solarized', '');
+      setAttributeIfDifferent(element, 'data-has-background-color-before-solarized', '');
     }
   };
 
