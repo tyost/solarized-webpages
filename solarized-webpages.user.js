@@ -80,6 +80,9 @@ var onLoad = function() {
 
   markElementsForCss();
 
+  // Scan again after styles finish loading.
+  window.addEventListener("load", markElementsForCss);
+
   //======================================
   // Functions for retrieving certain DOM elements.
   //======================================
