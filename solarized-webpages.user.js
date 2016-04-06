@@ -70,7 +70,11 @@ var onLoad = function() {
 
     for (var i = allElements.length; i--;) {
       var element = allElements[i];
-      markIfHasBackgroundColor(element, window.getComputedStyle(element, null));
+      var computedStyle = window.getComputedStyle(element, null);
+
+      if (computedStyle) {
+        markIfHasBackgroundColor(element, computedStyle);
+      }
     }
   };
 
