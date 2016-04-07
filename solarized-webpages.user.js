@@ -8,6 +8,7 @@
 // @grant       GM_addStyle
 // @grant       GM_setValue
 // @grant       GM_getValue
+// @run-at      document-start
 // ==/UserScript==
 
 var onLoad = function() {
@@ -69,11 +70,18 @@ var onLoad = function() {
 
     for (var i = allElements.length; i--;) {
       var element = allElements[i];
-      markIfHasBackgroundColor(element, window.getComputedStyle(element, null));
+      var computedStyle = window.getComputedStyle(element, null);
+
+      if (computedStyle) {
+        markIfHasBackgroundColor(element, computedStyle);
+      }
     }
   };
 
   markElementsForCss();
+
+  // Scan again after styles finish loading.
+  window.addEventListener("load", markElementsForCss);
 
   //======================================
   // Functions for retrieving certain DOM elements.
@@ -377,7 +385,7 @@ var onLoad = function() {
 
 
   var getUrl = function() {
-    return content.document.location.href;
+    return window.location.href;
   };
 
   var scriptAlreadyRan = function() {
