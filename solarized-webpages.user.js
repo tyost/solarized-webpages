@@ -385,7 +385,7 @@ var onLoad = function() {
 
 
   var getUrl = function() {
-    return content.document.location.href;
+    return window.location.href;
   };
 
   var scriptAlreadyRan = function() {
