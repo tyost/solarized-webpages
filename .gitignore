@@ -1,1 +1,4 @@
 copy_to_greasemonkey.sh
+
+# The compiled userscript built from TypeScript.
+solarized-webpages.user.js
