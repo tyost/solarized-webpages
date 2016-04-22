@@ -1,4 +1,5 @@
 /// <reference path="../lib/es6-shim.d.ts" />
+/// <reference path="./ConfigurationPageRouter.ts" />
 /// <reference path="./Greasemonkey.ts" />
 
 let onLoad = function() {
@@ -323,93 +324,7 @@ let onLoad = function() {
   // Configuration page to edit the script's settings.
   //======================================
 
-  let createH1 = function(text) {
-    let h1 = document.createElement('h1');
-
-    h1.innerHTML = text;
-
-    return h1;
-  };
-
-  let createLabel = function(forId, text) {
-    let label = document.createElement('label');
-
-    label.setAttribute('for', forId);
-    label.innerHTML = text;
-
-    return label;
-  };
-
-  let createSelect = function(id, defaultValue, options) {
-    let select = document.createElement('select');
-
-    for (let value in options) {
-      let text = options[value];
-
-      let option = document.createElement('option');
-
-      option.value = value;
-      option.text = text;
-
-      if (value === defaultValue) {
-        option.selected = true;
-      }
-
-      select.appendChild(option);
-    }
-
-    return select;
-  };
-
-  let getBody = function() {
-    return document.getElementsByTagName('body')[0];
-  };
-
-  let appendToForm = function(elem) {
-    getBody().appendChild(elem);
-  };
-
-  let setupcolorThemeSelect = function() {
-    let colorThemeLabel = createLabel(
-      'color-theme-select',
-      'Color Theme'
-    );
-    appendToForm(colorThemeLabel);
-
-    let colorThemeSelect = createSelect(
-      'color-theme-select',
-      greasemonkey.getValue('colorTheme'),
-      {
-        light:  'Light',
-        dark:   'Dark'
-      }
-    );
-    appendToForm(colorThemeSelect);
-
-    colorThemeSelect.addEventListener('change', function() {
-      greasemonkey.setValue('colorTheme', colorThemeSelect.value);
-    });
-  };
-
-  let setupForm = function() {
-    appendToForm(createH1('Solarized Webpages Configuration'));
-    setupcolorThemeSelect();
-  };
-
-
-  let getUrl = function() {
-    return window.location.href;
-  };
-
-  let scriptAlreadyRan = function() {
-    return !!getBody().children.length;
-  };
-
-
-  let CONFIG_FORM_URL = 'about:blank#solarized-config';
-
-  if (getUrl() === CONFIG_FORM_URL && !scriptAlreadyRan()) {
-    setupForm();
-  }
+  // Show the configuration page when needed.
+  new ConfigurationPageRouter().route(window.location);
 };
 window.addEventListener("DOMContentLoaded", onLoad);

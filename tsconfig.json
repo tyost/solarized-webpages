@@ -33,7 +33,11 @@
   "files": [
     "src/Header.ts",
     "lib/es6-shim.d.ts",
+    "src/ConfigurationPage.ts",
+    "src/ConfigurationPageRouter.ts",
+    "src/ElementFactory.ts",
     "src/Greasemonkey.ts",
+    "src/SingleElementFinder.ts",
     "src/solarized-webpages.user.ts"
   ]
 }
