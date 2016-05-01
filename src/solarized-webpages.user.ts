@@ -1,29 +1,14 @@
 /// <reference path="../lib/es6-shim.d.ts" />
+/// <reference path="./ConfigurationDefaults.ts" />
 /// <reference path="./ConfigurationPageRouter.ts" />
-/// <reference path="./Greasemonkey.ts" />
+/// <reference path="./CssCode.ts"/>
+/// <reference path="./SingleElementFinder.ts"/>
 
 let onLoad = function() {
   'use strict';
 
-  //======================================
-  // Greasemonkey
-  //======================================
-
-  let greasemonkey = new Greasemonkey();
-
-  //======================================
   // Set defaults for missing configuration settings.
-  //======================================
-
-  let setDefault = function(setting, defaultValue) {
-    greasemonkey.setValue(setting, greasemonkey.getValue(setting, defaultValue));
-  };
-
-  let setupDefaultConfiguration = function() {
-    setDefault('colorTheme', 'dark');
-  };
-
-  setupDefaultConfiguration();
+  new ConfigurationDefaults().initialize();
 
   //======================================
   // Mark elements on the page that cannot be selected by CSS alone.
@@ -86,18 +71,11 @@ let onLoad = function() {
   window.addEventListener("load", markElementsForCss);
 
   //======================================
-  // Functions for retrieving certain DOM elements.
-  //======================================
-
-  let getHtmlElement = function() {
-    return document.getElementsByTagName('html')[0];
-  };
-
-  //======================================
   // Re-scan and mark the page when something changes that might affect styles.
   //======================================
 
   let registerForDomChange = function(callback) {
+    let htmlFinder: SingleElementFinder = new SingleElementFinder();
     let observer = new MutationObserver(callback);
     let observerSettings = {
       attributes: true,
@@ -105,7 +83,7 @@ let onLoad = function() {
       childList: true,
       subtree: true,
     };
-    observer.observe(getHtmlElement(), observerSettings);
+    observer.observe(htmlFinder.getHtmlElement(), observerSettings);
   };
 
   // Time in miliseconds to wait before scanning and marking when scheduled.
@@ -131,198 +109,9 @@ let onLoad = function() {
 
   setupRemarking();
 
-  //======================================
-  // Colors.
-  //======================================
 
-  let SOLARIZED_PALETTE = {
-    BASE03:   '#002b36',   // Darker
-    BASE02:   '#073642',
-    BASE01:   '#586e75',
-    BASE00:   '#657b83',
-    BASE0:    '#839496',
-    BASE1:    '#93a1a1',
-    BASE2:    '#eee8d5',
-    BASE3:    '#fdf6e3',   // Lighter
-    BLUE:     '#268bd2',
-    CYAN:     '#2aa198',
-    GREEN:    '#859900',
-    MAGENTA:  '#d33682',
-    ORANGE:   '#cb4b16',
-    RED:      '#dc322f',
-    VIOLET:   '#6c71c4',
-    YELLOW:   '#b58900'
-  };
-
-  // Base colors letying between light and dark.
-  let COLOR_THEMES = {
-    light: {
-      BACKGROUND:           SOLARIZED_PALETTE.BASE3,
-      BACKGROUND_HIGHLIGHT: SOLARIZED_PALETTE.BASE2,
-      BODY_TEXT:            SOLARIZED_PALETTE.BASE00
-    },
-    dark: {
-      BACKGROUND:           SOLARIZED_PALETTE.BASE03,
-      BACKGROUND_HIGHLIGHT: SOLARIZED_PALETTE.BASE02,
-      BODY_TEXT:            SOLARIZED_PALETTE.BASE0
-    }
-  };
-
-  // Choose colors based on the user's theme setting.
-  let COLORS = Object.assign({}, COLOR_THEMES[greasemonkey.getValue('colorTheme')]);
-
-  // Color settings shared between light and dark.
-  COLORS.HEADINGS = SOLARIZED_PALETTE.YELLOW;
-  COLORS.HYPERLINKS = SOLARIZED_PALETTE.BLUE;
-  COLORS.INTERACTIVE_ELEMENT_BORDER = SOLARIZED_PALETTE.CYAN;
-
-  //======================================
-  // Setup elements needed to control specificity (precedence) of CSS code.
-  //======================================
-
-  let getHtmlId = function() {
-    return getHtmlElement().getAttribute('id');
-  };
-
-  let isOnlyWhitespace = function(s) {
-    return /^\s*$/.test(s);
-  };
-
-  let DEFAULT_HTML_ID = 'solarizedHtml54321';
-
-  let setHtmlIdIfMissing = function() {
-    let htmlId = getHtmlId();
-
-    if (!htmlId || isOnlyWhitespace(htmlId)) {
-      getHtmlElement().setAttribute('id', DEFAULT_HTML_ID);
-    }
-  };
-
-  setHtmlIdIfMissing();
-
-  //======================================
-  // Functions controlling the specificity (precedence) of CSS code.
-  //======================================
-
-  let buildIdSelector = function(id) {
-    return '#' + id;
-  };
-
-  let buildIdSelectorWithSpecificity = function(id, amount) {
-    return buildIdSelector(id).repeat(amount);
-  };
-
-  let getSubstringBefore = function(s, character) {
-    return s.substring(0, s.indexOf(character));
-  };
-
-  let insertBeforeAllSelectors = function(css, extraSelector) {
-    let selectorCss = getSubstringBefore(css, '{');
-    let newSelectorCss = selectorCss.replace(/([^,]+)(,|$)/g, extraSelector + ' $1$2');
-    return css.replace(selectorCss, newSelectorCss);
-  };
-
-  let increaseAllSpecificity = function(css, amount) {
-    // Insert a repeated ID before each CSS selector to artificially raise
-    // its specificity by the specified amount.
-    // For example, #solarizedHtml54321#solarizedHtml54321 p
-    // raises the id specificity by two.
-    let extraSelector = buildIdSelectorWithSpecificity(getHtmlId(), amount);
-    return insertBeforeAllSelectors(css, extraSelector);
-  };
-
-  //======================================
   // Recolor the page with CSS.
-  //======================================
-
-  let GENERIC_SPECIFICITY = 15;
-  let HIGHLIGHT_SPECIFICITY = GENERIC_SPECIFICITY + 1;
-
-  let getGenericCss = function() {
-    let css = `
-        * {
-          border-color: ${COLORS.BACKGROUND_HIGHLIGHT} !important;
-          color: ${COLORS.BODY_TEXT} !important;
-          text-shadow: none !important;
-        }
-    `;
-    return increaseAllSpecificity(css, GENERIC_SPECIFICITY);
-  };
-
-  let getColoredBackgroundCss = function() {
-    let css = `
-        body,
-        [data-has-background-color-before-solarized] {
-          background-color: ${COLORS.BACKGROUND} !important;
-          background-image: none !important;
-        }
-    `;
-    return increaseAllSpecificity(css, GENERIC_SPECIFICITY);
-  };
-
-  let getHeadingCss = function() {
-    let css = `
-        h1, h2, h3, h4, h5, h6, header, hgroup, thead,
-        h1 *, h2 *, h3 *, h4 *, h5 *, h6 *, header *, hgroup *, thead * {
-          color: ${COLORS.HEADINGS} !important;
-        }
-    `;
-    return increaseAllSpecificity(css, GENERIC_SPECIFICITY);
-  };
-
-  let getHyperlinkCss = function() {
-    let css = `
-        a {
-          color: ${COLORS.HYPERLINKS} !important;
-        }
-    `;
-    return increaseAllSpecificity(css, GENERIC_SPECIFICITY);
-  };
-
-  let getHighlightCss = function() {
-    let css = `
-        a[data-has-background-color-before-solarized],
-        applet, button, code, command, datalist, details,
-        dialog, dir, frame, frameset, input, isindex, keygen, legend,
-        listing, menu, menuitem, meter, optgroup, option, output, pre, progress,
-        select, summary, textarea {
-          background-color: ${COLORS.BACKGROUND_HIGHLIGHT} !important;
-          opacity: 1 !important;
-        }
-    `;
-    return increaseAllSpecificity(css, HIGHLIGHT_SPECIFICITY);
-  };
-
-  let getInteractiveElementCss = function() {
-    let css = `
-        a[data-has-background-color-before-solarized],
-        applet, button, command, datalist, details,
-        dialog, dir, input, isindex, keygen,
-        listing, menu, menuitem, meter, optgroup, option, output,
-        select, summary, textarea,
-        [role="button"], [role="checkbox"], [role="radio"],
-        [role="scrollbar"], [role="slider"], [role="spinbutton"],
-        [role="switch"], [role="textbox"] {
-          border: 1px dotted ${COLORS.INTERACTIVE_ELEMENT_BORDER} !important;
-        }
-    `;
-    return increaseAllSpecificity(css, HIGHLIGHT_SPECIFICITY);
-  };
-
-  let getAllCss = function() {
-    return  getGenericCss() +
-            getColoredBackgroundCss() +
-            getHeadingCss() +
-            getHyperlinkCss() +
-            getHighlightCss() +
-            getInteractiveElementCss();
-  };
-
-  greasemonkey.addStyle(getAllCss());
-
-  //======================================
-  // Configuration page to edit the script's settings.
-  //======================================
+  new CssCode().outputCss();
 
   // Show the configuration page when needed.
   new ConfigurationPageRouter().route(window.location);

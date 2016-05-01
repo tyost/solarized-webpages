@@ -33,11 +33,19 @@
   "files": [
     "src/Header.ts",
     "lib/es6-shim.d.ts",
+    "src/ConfigurationDefaults.ts",
     "src/ConfigurationPage.ts",
     "src/ConfigurationPageRouter.ts",
+    "src/CssBuilder.ts",
+    "src/CssCode.ts",
+    "src/CssColorThemes.ts",
+    "src/CssSpecificity.ts",
+    "src/CssSpecificityRaiser.ts",
     "src/ElementFactory.ts",
     "src/Greasemonkey.ts",
+    "src/HtmlIdPreparer.ts",
     "src/SingleElementFinder.ts",
-    "src/solarized-webpages.user.ts"
+    "src/solarized-webpages.user.ts",
+    "src/SolarizedColor.ts"
   ]
 }
