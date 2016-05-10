@@ -1,14 +1,17 @@
+/// <reference path="./BackgroundColorMarker.ts"/>
 /// <reference path="./CssBuilder.ts"/>
 /// <reference path="./CssColorThemes.ts"/>
 /// <reference path="./Greasemonkey.ts"/>
 
 /** Generates the CSS code to the page. */
 class CssCode {
+  private backgroundColorMarker: BackgroundColorMarker;
   private cssBuilder: CssBuilder;
   private colorThemes: CssColorThemes;
   private greasemonkey: Greasemonkey;
 
   constructor() {
+    this.backgroundColorMarker = new BackgroundColorMarker();
     this.cssBuilder = new CssBuilder();
     this.colorThemes = new CssColorThemes();
     this.greasemonkey = new Greasemonkey();
@@ -28,7 +31,7 @@ class CssCode {
   private getColoredBackgroundCss(): string {
     return `
       body,
-      [data-has-background-color-before-solarized] {
+      [${this.backgroundColorMarker.getAttributeName()}] {
         background-color: ${this.colorThemes.getBackground()} !important;
         background-image: none !important;
       }
@@ -54,7 +57,7 @@ class CssCode {
 
   private getHighlightCss(): string {
     return `
-      a[data-has-background-color-before-solarized],
+      a[${this.backgroundColorMarker.getAttributeName()}],
       applet, button, code, command, datalist, details,
       dialog, dir, frame, frameset, input, isindex, keygen, legend,
       listing, menu, menuitem, meter, optgroup, option, output, pre, progress,
@@ -67,7 +70,7 @@ class CssCode {
 
   private getInteractiveElementCss(): string {
     return `
-      a[data-has-background-color-before-solarized],
+      a[${this.backgroundColorMarker.getAttributeName()}],
       applet, button, command, datalist, details,
       dialog, dir, input, isindex, keygen,
       listing, menu, menuitem, meter, optgroup, option, output,
