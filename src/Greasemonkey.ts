@@ -1,11 +1,8 @@
-/**
- *  Wraps global Greasemonkey functions to expose them to TypeScript.
- */
-
 declare var GM_addStyle: any;
 declare var GM_getValue: any;
 declare var GM_setValue: any;
 
+/** Wraps global Greasemonkey functions to expose them to TypeScript. */
 class Greasemonkey {
   addStyle(css: string): void {
     GM_addStyle(css);
