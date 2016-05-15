@@ -4,8 +4,8 @@ An **experimental** (mad science!) Greasemonkey userscript to recolor websites
 to fit the
 [Solarized light and dark color palette](http://ethanschoonover.com/solarized).
 
-It may work in userscript extensions for other browsers, but it hasn't been
-tested much with them.
+It may work in userscript extensions for browsers other than Firefox, but it
+hasn't been tested much with them.
 
 Some parts of websites recolor poorly, especially parts that rely on color as
 the only way of presenting information.
