@@ -40,7 +40,9 @@ Disabling this userscript for a website in Greasemonkey:
    to _Excluded Pages_.
 5. Enter a pattern to match the website where recoloring should be disabled.
    For example, to block all github.com pages, enter:
-   <pre>*github.com/*</pre>
+
+    ```*github.com/*```
+
 6. Press _Okay_ twice.
 
 ## Developer information
