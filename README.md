@@ -15,8 +15,7 @@ the only way of presenting information.
 1. Install
    [Greasemonkey (Firefox)](https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/)
    or a similar userscript extension for other browsers.
-2. Download the latest version of
-   [Solarized Webpages](https://github.com/tyost/solarized-webpages/raw/master/solarized-webpages.user.js).
+2. [Download the latest version of Solarized Webpages](https://github.com/tyost/solarized-webpages-releases/raw/master/solarized-webpages.user.js).
 3. Upon trying to visit the previous link, a new window should appear.
    Choose to install the script.
 
