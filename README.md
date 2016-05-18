@@ -32,6 +32,7 @@ Browser extensions like Greasemonkey provide a way to control on which
 websites this userscript runs.
 
 Disabling this userscript for a website in Greasemonkey:
+
 1. Go to the [about:addons](about:addons) page.
 2. Click on the _User Scrips_ tab.
 3. Click on _Preferences_ for _Solarized Webpages_.
@@ -40,7 +41,9 @@ Disabling this userscript for a website in Greasemonkey:
 5. Enter a pattern to match the website where recoloring should be disabled.
    For example, to block all github.com pages, enter:
 
-    ```*github.com/*```
+    ```
+    *github.com/*
+    ```
 
 6. Press _Okay_ twice.
 
