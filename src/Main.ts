@@ -8,7 +8,7 @@
 /// <reference path="./SingleElementFinder.ts"/>
 
 
-let onLoad = function() {
+let onLoad = () => {
   'use strict';
 
   // Set defaults for missing configuration settings.

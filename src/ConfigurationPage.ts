@@ -31,7 +31,7 @@ class ConfigurationPage {
     );
     this.appendToForm(colorThemeSelect);
 
-    colorThemeSelect.addEventListener('change', function(): void {
+    colorThemeSelect.addEventListener('change', () => {
       greasemonkey.setValue('colorTheme', colorThemeSelect.value);
     });
   };

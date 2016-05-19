@@ -24,7 +24,7 @@ class DelayedAllElementMarkers {
       var that = this;
 
       this.markTimeoutId = window.setTimeout(
-        function() {
+        () => {
           that.markers.markElementsForCss();
           that.markTimeoutId = false;
         },
