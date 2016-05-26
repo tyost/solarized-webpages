@@ -3,7 +3,6 @@
 /// <reference path="./ConfigurationDefaults.ts" />
 /// <reference path="./ConfigurationPageRouter.ts" />
 /// <reference path="./CssCode.ts"/>
-/// <reference path="./DelayedAllElementMarkers.ts" />
 /// <reference path="./DomWatch.ts"/>
 /// <reference path="./SingleElementFinder.ts"/>
 
@@ -16,15 +15,16 @@ let onLoad = () => {
 
   // Mark elements on the page that cannot be selected by CSS alone.
   let markers: AllElementMarkers = new AllElementMarkers();
-  markers.markElementsForCss();
+  markers.markAllElements();
 
-  // Mark again after styles finish loading.
-  window.addEventListener("load", () => {markers.markElementsForCss()});
+  window.addEventListener('load', () => {
+    // Mark again after styles finish loading.
+    markers.markAllElements();
 
-  // Re-scan and mark the page when something changes that might affect styles.
-  let delayedMarkers: DelayedAllElementMarkers = new DelayedAllElementMarkers();
-  new DomWatch().callForAnyChange(() => {
-    delayedMarkers.markElementsForCss()
+    // After the page loads, start rescanning and marking elements that change.
+    new DomWatch().callForAnyChange((element: Element) => {
+      markers.markElement(element);
+    });
   });
 
   // Recolor the page with CSS.

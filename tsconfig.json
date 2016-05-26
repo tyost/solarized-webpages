@@ -45,7 +45,6 @@
     "src/CssSpecificity.ts",
     "src/CssSpecificityRaiser.ts",
     "src/CssStyleDeclarations.ts",
-    "src/DelayedAllElementMarkers.ts",
     "src/DomWatch.ts",
     "src/ElementAttributes.ts",
     "src/ElementFactory.ts",
