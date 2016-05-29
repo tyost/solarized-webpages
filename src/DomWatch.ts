@@ -8,13 +8,18 @@ class DomWatch {
     this.htmlFinder = new SingleElementFinder();
   }
 
-
-  private addElementNodes(elements: Element[], nodeList: NodeList): void {
+  /**
+    Insert all the elements from nodeList, and their children, into
+    the elements array.
+  */
+  private addElementNodesAndChildren(elements: Element[], nodeList: NodeList): void {
     for (let i = 0; i < nodeList.length; i++) {
       let node: Node = nodeList.item(i);
 
       if (node.nodeType == Node.ELEMENT_NODE) {
         elements.push(node as Element);
+
+        this.addElementNodesAndChildren(elements, node.childNodes);
       }
     }
   }
@@ -25,7 +30,7 @@ class DomWatch {
     for (let i = 0; i < records.length; i++) {
       let record: MutationRecord = records[i];
 
-      this.addElementNodes(elements, record.addedNodes);
+      this.addElementNodesAndChildren(elements, record.addedNodes);
 
       let nodeTarget = record.target;
       if (nodeTarget.nodeType == Node.ELEMENT_NODE) {
