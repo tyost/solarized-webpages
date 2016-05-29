@@ -35,6 +35,7 @@ class DomWatch {
       let nodeTarget = record.target;
       if (nodeTarget.nodeType == Node.ELEMENT_NODE) {
         elements.push(nodeTarget as Element);
+        this.addElementNodesAndChildren(elements, nodeTarget.childNodes);
       }
     }
 
