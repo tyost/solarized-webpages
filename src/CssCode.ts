@@ -53,6 +53,16 @@ class CssCode {
     `, CssSpecificity.Base);
   };
 
+  private getHorizontalRuleCss(): CssRuleSet {
+    return new CssRuleSet(`
+      hr {
+        background-color: ${this.colorThemes.getBodyText()} !important;
+        border-color: ${this.colorThemes.getBodyText()} !important;
+        opacity: 1 !important;
+      }
+    `, CssSpecificity.Highlight);
+  };
+
   private getHighlightCss(): CssRuleSet {
     return new CssRuleSet(`
       a[${this.backgroundColorMarker.getAttributeName()}],
@@ -88,6 +98,7 @@ class CssCode {
       this.getColoredBackgroundCss(),
       this.getHeadingCss(),
       this.getHyperlinkCss(),
+      this.getHorizontalRuleCss(),
       this.getHighlightCss(),
       this.getInteractiveElementCss()
     ];
