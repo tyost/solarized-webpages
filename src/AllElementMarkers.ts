@@ -9,17 +9,20 @@ class AllElementMarkers {
   }
 
 
-  markElementsForCss(): void {
+  markElement(element: Element): void {
+    let computedStyle: CSSStyleDeclaration =
+        window.getComputedStyle(element, undefined);
+
+    if (computedStyle) {
+      this.backgroundColorMarker.requestMark(element, computedStyle);
+    }
+  }
+
+  markAllElements(): void {
     let allElements: NodeListOf<Element> = document.getElementsByTagName('*');
 
     for (let i: number = allElements.length; i--;) {
-      let element: Element = allElements[i];
-      let computedStyle: CSSStyleDeclaration =
-          window.getComputedStyle(element, undefined);
-
-      if (computedStyle) {
-        this.backgroundColorMarker.requestMark(element, computedStyle);
-      }
+      this.markElement(allElements[i]);
     }
   };
 }
