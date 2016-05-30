@@ -5,9 +5,15 @@
  *  Creates the Configuration Page.
  */
 class ConfigurationPage {
+  private bodyFinder: SingleElementFinder;
+
+  constructor() {
+    this.bodyFinder = new SingleElementFinder();
+  }
+
+
   private appendToForm(elem: Element): void {
-    var bodyFinder: SingleElementFinder = new SingleElementFinder();
-    bodyFinder.getBody().appendChild(elem);
+    this.bodyFinder.getBody().appendChild(elem);
   };
 
   private setupcolorThemeSelect(): void {
@@ -36,7 +42,13 @@ class ConfigurationPage {
     });
   };
 
+  private clearBody() {
+    this.bodyFinder.getBody().innerHTML = '';
+  }
+
   setupForm(): void {
+    this.clearBody();
+
     let elementFactory: ElementFactory = new ElementFactory();
     this.appendToForm(elementFactory.createH1('Solarized Webpages Configuration'));
     this.setupcolorThemeSelect();
