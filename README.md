@@ -23,6 +23,7 @@ the only way of presenting information.
 
 Once installed, visit
 [about:blank#solarized-config](about:blank#solarized-config)
+(or [the config page for non-Firefox browsers](https://github.com/tyost/solarized-webpages/blob/master/config.html))
 to switch between the light and dark color themes. Pages must be reloaded
 to see the new changes.
 
