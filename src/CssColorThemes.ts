@@ -1,13 +1,10 @@
-/// <reference path="./Greasemonkey.ts"/>
 /// <reference path="./SolarizedColor.ts"/>
 
 /** Finds the CSS colors that should be used by the script. */
 class CssColorThemes {
   private colors: any;
 
-  public constructor() {
-    var greasemonkey: Greasemonkey = new Greasemonkey();
-
+  public constructor(data: ConfigurationData) {
     // Base colors varying between light and dark.
     let colorThemes = {
       light: {
@@ -23,7 +20,7 @@ class CssColorThemes {
     };
 
     // Choose colors based on the user's theme setting.
-    let colorTheme = colorThemes[greasemonkey.getValue('colorTheme')];
+    let colorTheme = colorThemes[data.getValue('colorTheme')];
     this.colors = Object.assign({}, colorTheme);
   }
 

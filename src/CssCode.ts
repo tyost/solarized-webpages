@@ -9,9 +9,9 @@ class CssCode {
   private colorThemes: CssColorThemes;
   private greasemonkey: Greasemonkey;
 
-  constructor() {
+  constructor(cssColorThemes: CssColorThemes) {
     this.backgroundColorMarker = new BackgroundColorMarker();
-    this.colorThemes = new CssColorThemes();
+    this.colorThemes = cssColorThemes;
     this.greasemonkey = new Greasemonkey();
   }
 
