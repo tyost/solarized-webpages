@@ -7,6 +7,9 @@ class SingleElementFinder {
     return document.getElementsByTagName('body')[0];
   };
 
+  getHead(): HTMLHeadElement {
+    return document.getElementsByTagName('head')[0];
+  };
 
   getHtmlElement(): HTMLElement {
     return document.getElementsByTagName('html')[0];
