@@ -22,12 +22,21 @@ class ConfigurationPage {
     return [
       {
         data: 'colorTheme',
-        label: 'Color Theme',
+        label: '<b>Color Theme</b>',
         options: {
           light: 'Light',
           dark: 'Dark'
         }
-      }
+      },
+      {
+        data: 'domWatch',
+        label: '<b>DOM Watch</b><br>Recolor the page as it changes.'
+            + ' Disable to improve performance.',
+        options: {
+          enabled: 'Enabled',
+          disabled: 'Disabled'
+        }
+      },
     ];
   }
 
@@ -37,18 +46,26 @@ class ConfigurationPage {
 
   private createOptionElements(): void {
     this.getConfigurationOptions().forEach((option) => {
+      let div: HTMLDivElement = document.createElement('div');
+      div.style.marginBottom = '20px';
+
       let label: HTMLLabelElement = this.elementFactory.createLabel(
         option.data,
         option.label
       );
-      this.appendToForm(label);
+      label.style.display = 'block';
+      label.style.maxWidth = '500px';
+      div.appendChild(label);
 
       let select: HTMLSelectElement = this.elementFactory.createSelect(
         option.data,
         this.data.getValue(option.data),
         option.options
       );
-      this.appendToForm(select);
+      select.style.marginLeft = '10px';
+      div.appendChild(select);
+
+      this.appendToForm(div);
 
       select.addEventListener('change', () => {
         this.greasemonkey.setValue(option.data, select.value);

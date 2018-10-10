@@ -14,6 +14,7 @@ class ConfigurationData {
     const optionMap = new Map<string, string>();
 
     optionMap.set('colorTheme', 'dark');
+    optionMap.set('domWatch', 'enabled');
 
     return optionMap;
   }
