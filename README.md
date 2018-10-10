@@ -22,10 +22,8 @@ the only way of presenting information.
 ## Switch light and dark
 
 Once installed, visit
-[about:blank#solarized-config](about:blank#solarized-config)
-(or [the config page for non-Firefox browsers](https://github.com/tyost/solarized-webpages/blob/master/config.html))
-to switch between the light and dark color themes. Pages must be reloaded
-to see the new changes.
+[the config page](https://github.com/tyost/solarized-webpages/blob/master/config.html)
+to switch between the light and dark color themes. Reload the page to see the colors change.
 
 ## Disable recoloring for certain websites
 
