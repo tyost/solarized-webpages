@@ -1,4 +1,4 @@
-/// <reference path="./CssStyleDeclarations"/>
+/// <reference path="./CssStyleDeclarations.ts"/>
 /// <reference path="./ElementAttributes.ts"/>
 /// <reference path="./ElementMarker.ts"/>
 

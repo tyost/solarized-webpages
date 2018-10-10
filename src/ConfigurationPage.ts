@@ -6,9 +6,11 @@
  */
 class ConfigurationPage {
   private bodyFinder: SingleElementFinder;
+  private data: ConfigurationData;
 
-  constructor() {
+  constructor(data: ConfigurationData) {
     this.bodyFinder = new SingleElementFinder();
+    this.data = data;
   }
 
 
@@ -29,7 +31,7 @@ class ConfigurationPage {
 
     let colorThemeSelect: HTMLSelectElement = elementFactory.createSelect(
       'color-theme-select',
-      greasemonkey.getValue('colorTheme'),
+      this.data.getValue('colorTheme'),
       {
         light:  'Light',
         dark:   'Dark'

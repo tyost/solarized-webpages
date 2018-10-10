@@ -1,18 +1,18 @@
 /// <reference path="./BackgroundColorMarker.ts"/>
 /// <reference path="./CssColorThemes.ts"/>
 /// <reference path="./CssRuleSet.ts"/>
-/// <reference path="./Greasemonkey.ts"/>
+/// <reference path="./SingleElementFinder.ts"/>
 
 /** Generates the CSS code to the page. */
 class CssCode {
   private backgroundColorMarker: BackgroundColorMarker;
   private colorThemes: CssColorThemes;
-  private greasemonkey: Greasemonkey;
+  private elementFinder: SingleElementFinder;
 
-  constructor() {
+  constructor(cssColorThemes: CssColorThemes) {
     this.backgroundColorMarker = new BackgroundColorMarker();
-    this.colorThemes = new CssColorThemes();
-    this.greasemonkey = new Greasemonkey();
+    this.colorThemes = cssColorThemes;
+    this.elementFinder = new SingleElementFinder();
   }
 
 
@@ -91,6 +91,19 @@ class CssCode {
     `, CssSpecificity.Highlight);
   };
 
+  /** Output CSS code to the browser. */
+  private addStyle(cssCode: string): void {
+    const head = this.elementFinder.getHead();
+
+    if (head) {
+      const styleElement = document.createElement('style');
+      const styleText = document.createTextNode(cssCode);
+      styleElement.appendChild(styleText);
+
+      head.appendChild(styleElement);
+    }
+  }
+
   /** Output all of the CSS to the page. */
   public outputCss(): void {
     let cssRuleSets: CssRuleSet[] = [
@@ -107,6 +120,6 @@ class CssCode {
       return ruleSet.getFinalCss()
     });
 
-    this.greasemonkey.addStyle(finalCssStrings.join(''));
+    this.addStyle(finalCssStrings.join(''));
   };
 }

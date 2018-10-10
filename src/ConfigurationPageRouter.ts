@@ -2,6 +2,12 @@
  *  Decides when to show the configuration page.
  */
 class ConfigurationPageRouter {
+  private data: ConfigurationData;
+
+  constructor(data: ConfigurationData) {
+    this.data = data;
+  }
+
   private getConfigurationUrls(): string[] {
     return [
       'about:blank#solarized-config',
@@ -17,7 +23,7 @@ class ConfigurationPageRouter {
 
   route(location: Location): void {
     if (this.isConfigurationPage(location)) {
-      new ConfigurationPage().setupForm();
+      new ConfigurationPage(this.data).setupForm();
     }
   }
 }
