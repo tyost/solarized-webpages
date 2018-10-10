@@ -8,39 +8,51 @@ class ConfigurationPage {
   private bodyFinder: SingleElementFinder;
   private elementFactory: ElementFactory;
   private data: ConfigurationData;
+  private greasemonkey: Greasemonkey;
 
   constructor(data: ConfigurationData) {
     this.bodyFinder = new SingleElementFinder();
     this.elementFactory = new ElementFactory();
+    this.greasemonkey = new Greasemonkey();
     this.data = data;
   }
 
+
+  private getConfigurationOptions(): any[] {
+    return [
+      {
+        data: 'colorTheme',
+        label: 'Color Theme',
+        options: {
+          light: 'Light',
+          dark: 'Dark'
+        }
+      }
+    ];
+  }
 
   private appendToForm(elem: Element): void {
     this.bodyFinder.getBody().appendChild(elem);
   };
 
-  private setupcolorThemeSelect(): void {
-    let colorThemeLabel: HTMLLabelElement = this.elementFactory.createLabel(
-      'color-theme-select',
-      'Color Theme'
-    );
-    this.appendToForm(colorThemeLabel);
+  private createOptionElements(): void {
+    this.getConfigurationOptions().forEach((option) => {
+      let label: HTMLLabelElement = this.elementFactory.createLabel(
+        option.data,
+        option.label
+      );
+      this.appendToForm(label);
 
-    let greasemonkey: Greasemonkey = new Greasemonkey();
+      let select: HTMLSelectElement = this.elementFactory.createSelect(
+        option.data,
+        this.data.getValue(option.data),
+        option.options
+      );
+      this.appendToForm(select);
 
-    let colorThemeSelect: HTMLSelectElement = this.elementFactory.createSelect(
-      'color-theme-select',
-      this.data.getValue('colorTheme'),
-      {
-        light:  'Light',
-        dark:   'Dark'
-      }
-    );
-    this.appendToForm(colorThemeSelect);
-
-    colorThemeSelect.addEventListener('change', () => {
-      greasemonkey.setValue('colorTheme', colorThemeSelect.value);
+      select.addEventListener('change', () => {
+        this.greasemonkey.setValue(option.data, select.value);
+      });
     });
   };
 
@@ -52,6 +64,6 @@ class ConfigurationPage {
     this.clearBody();
 
     this.appendToForm(this.elementFactory.createH1('Solarized Webpages Configuration'));
-    this.setupcolorThemeSelect();
+    this.createOptionElements();
   };
 }
