@@ -5,7 +5,6 @@
 // @include     *
 // @include     about:blank#solarized-config
 // @version     0.1.2
-// @grant       GM.addStyle
 // @grant       GM.setValue
 // @grant       GM.getValue
 // @run-at      document-start
