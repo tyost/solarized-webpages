@@ -6,10 +6,12 @@
  */
 class ConfigurationPage {
   private bodyFinder: SingleElementFinder;
+  private elementFactory: ElementFactory;
   private data: ConfigurationData;
 
   constructor(data: ConfigurationData) {
     this.bodyFinder = new SingleElementFinder();
+    this.elementFactory = new ElementFactory();
     this.data = data;
   }
 
@@ -19,9 +21,7 @@ class ConfigurationPage {
   };
 
   private setupcolorThemeSelect(): void {
-    let elementFactory: ElementFactory = new ElementFactory();
-
-    let colorThemeLabel: HTMLLabelElement = elementFactory.createLabel(
+    let colorThemeLabel: HTMLLabelElement = this.elementFactory.createLabel(
       'color-theme-select',
       'Color Theme'
     );
@@ -29,7 +29,7 @@ class ConfigurationPage {
 
     let greasemonkey: Greasemonkey = new Greasemonkey();
 
-    let colorThemeSelect: HTMLSelectElement = elementFactory.createSelect(
+    let colorThemeSelect: HTMLSelectElement = this.elementFactory.createSelect(
       'color-theme-select',
       this.data.getValue('colorTheme'),
       {
@@ -51,8 +51,7 @@ class ConfigurationPage {
   setupForm(): void {
     this.clearBody();
 
-    let elementFactory: ElementFactory = new ElementFactory();
-    this.appendToForm(elementFactory.createH1('Solarized Webpages Configuration'));
+    this.appendToForm(this.elementFactory.createH1('Solarized Webpages Configuration'));
     this.setupcolorThemeSelect();
   };
 }
