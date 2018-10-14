@@ -11,22 +11,19 @@
 let onLoad = () => {
   'use strict';
 
-  // Mark elements on the page that cannot be selected by CSS alone.
-  let markers: AllElementMarkers = new AllElementMarkers();
-  markers.markAllElements();
-
-  window.addEventListener('load', () => {
-    // Mark again after styles finish loading.
+  // Obtain the configuration options or defaults from the database.
+  ConfigurationData.createFromDatabase().then((data) => {
+    // Mark elements on the page that cannot be selected by CSS alone.
+    let markers: AllElementMarkers = new AllElementMarkers();
     markers.markAllElements();
 
     // After the page loads, start rescanning and marking elements that change.
-    new DomWatch().callForAnyChange((element: Element) => {
-      markers.markElement(element);
-    });
-  });
+    if (data.getValue('domWatch') === 'enabled') {
+      new DomWatch().callForAnyChange((element: Element) => {
+        markers.markElement(element);
+      });
+    }
 
-  // Obtain the configuration options or defaults from the database.
-  ConfigurationData.createFromDatabase().then((data) => {
     // Recolor the page with CSS based on the user's configuration.
     const cssColorThemes = new CssColorThemes(data);
     new CssCode(cssColorThemes).outputCss();
@@ -35,4 +32,4 @@ let onLoad = () => {
     new ConfigurationPageRouter(data).route(window.location);
   });
 };
-window.addEventListener("DOMContentLoaded", onLoad);
+window.addEventListener("load", onLoad);

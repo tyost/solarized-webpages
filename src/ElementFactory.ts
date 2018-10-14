@@ -23,6 +23,7 @@ class ElementFactory {
       HTMLSelectElement {
 
     let select: HTMLSelectElement = document.createElement('select');
+    select.id = id;
 
     for (let value in options) {
       let text: string = options[value];

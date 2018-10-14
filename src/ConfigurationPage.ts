@@ -6,41 +6,70 @@
  */
 class ConfigurationPage {
   private bodyFinder: SingleElementFinder;
+  private elementFactory: ElementFactory;
   private data: ConfigurationData;
+  private greasemonkey: Greasemonkey;
 
   constructor(data: ConfigurationData) {
     this.bodyFinder = new SingleElementFinder();
+    this.elementFactory = new ElementFactory();
+    this.greasemonkey = new Greasemonkey();
     this.data = data;
   }
 
+
+  private getConfigurationOptions(): any[] {
+    return [
+      {
+        data: 'colorTheme',
+        label: '<b>Color Theme</b>',
+        options: {
+          light: 'Light',
+          dark: 'Dark'
+        }
+      },
+      {
+        data: 'domWatch',
+        label: '<b>DOM Watch</b><br>Recolor the page as it changes.'
+            + ' Disable to improve performance.',
+        options: {
+          enabled: 'Enabled',
+          disabled: 'Disabled'
+        }
+      },
+    ];
+  }
 
   private appendToForm(elem: Element): void {
     this.bodyFinder.getBody().appendChild(elem);
   };
 
-  private setupcolorThemeSelect(): void {
-    let elementFactory: ElementFactory = new ElementFactory();
+  private createOptionElements(): void {
+    this.getConfigurationOptions().forEach((option) => {
+      let div: HTMLDivElement = document.createElement('div');
+      div.style.marginBottom = '20px';
 
-    let colorThemeLabel: HTMLLabelElement = elementFactory.createLabel(
-      'color-theme-select',
-      'Color Theme'
-    );
-    this.appendToForm(colorThemeLabel);
+      let label: HTMLLabelElement = this.elementFactory.createLabel(
+        option.data,
+        option.label
+      );
+      label.style.display = 'block';
+      label.style.maxWidth = '500px';
+      div.appendChild(label);
 
-    let greasemonkey: Greasemonkey = new Greasemonkey();
+      let select: HTMLSelectElement = this.elementFactory.createSelect(
+        option.data,
+        this.data.getValue(option.data),
+        option.options
+      );
+      select.style.marginLeft = '10px';
+      div.appendChild(select);
 
-    let colorThemeSelect: HTMLSelectElement = elementFactory.createSelect(
-      'color-theme-select',
-      this.data.getValue('colorTheme'),
-      {
-        light:  'Light',
-        dark:   'Dark'
-      }
-    );
-    this.appendToForm(colorThemeSelect);
+      this.appendToForm(div);
 
-    colorThemeSelect.addEventListener('change', () => {
-      greasemonkey.setValue('colorTheme', colorThemeSelect.value);
+      select.addEventListener('change', () => {
+        this.greasemonkey.setValue(option.data, select.value);
+      });
     });
   };
 
@@ -51,8 +80,7 @@ class ConfigurationPage {
   setupForm(): void {
     this.clearBody();
 
-    let elementFactory: ElementFactory = new ElementFactory();
-    this.appendToForm(elementFactory.createH1('Solarized Webpages Configuration'));
-    this.setupcolorThemeSelect();
+    this.appendToForm(this.elementFactory.createH1('Solarized Webpages Configuration'));
+    this.createOptionElements();
   };
 }
