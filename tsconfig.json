@@ -1,0 +1,58 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "isolatedModules": false,
+    "jsx": "react",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "declaration": false,
+    "noImplicitAny": false,
+    "noImplicitUseStrict": false,
+    "removeComments": false,
+    "noLib": false,
+    "preserveConstEnums": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "outFile": "./solarized-webpages.user.js"
+  },
+  "filesGlob": [
+    "src/Header.ts",
+    "**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "typings/browser",
+    "typings/browser.d.ts"
+  ],
+  "compileOnSave": true,
+  "buildOnSave": true,
+  "atom": {
+    "rewriteTsconfig": true
+  },
+  "files": [
+    "src/Header.ts",
+    "lib/es6-shim.d.ts",
+    "src/AllElementMarkers.ts",
+    "src/BackgroundColorMarker.ts",
+    "src/ConfigurationDefaults.ts",
+    "src/ConfigurationPage.ts",
+    "src/ConfigurationPageRouter.ts",
+    "src/CssCode.ts",
+    "src/CssColorThemes.ts",
+    "src/CssColorValues.ts",
+    "src/CssRuleSet.ts",
+    "src/CssSpecificity.ts",
+    "src/CssSpecificityRaiser.ts",
+    "src/CssStyleDeclarations.ts",
+    "src/DomWatch.ts",
+    "src/ElementAttributes.ts",
+    "src/ElementFactory.ts",
+    "src/ElementMarker.ts",
+    "src/Greasemonkey.ts",
+    "src/HtmlIdPreparer.ts",
+    "src/Main.ts",
+    "src/SingleElementFinder.ts",
+    "src/SolarizedColor.ts"
+  ]
+}
