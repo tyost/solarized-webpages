@@ -20,7 +20,7 @@ class CssStyleDeclarations {
 
     return backgroundImage &&
         backgroundImage !== 'none' &&
-        !this.cssColorValues.isColorGradient(backgroundImage);
+        this.cssColorValues.hasPlainImage(backgroundImage);
   }
 
   /**

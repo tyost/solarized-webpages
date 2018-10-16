@@ -2,18 +2,19 @@
   Interprets CSS color values.
 */
 class CssColorValues {
-  private colorGradientRegex: RegExp;
+  private urlRegex: RegExp;
 
   constructor() {
-    this.colorGradientRegex = new RegExp(
-      '^(-(moz|ms|o|webkit)-)?' +
-      '(linear-gradient|repeating-linear-gradient|radial-gradient|repeating-radial-gradient)'
-    );
+    this.urlRegex = new RegExp('url\\(');
   }
 
 
-  /** Returns true if the specified CSS value is a color gradient. */
-  isColorGradient(cssValue: string): boolean {
-    return this.colorGradientRegex.test(cssValue);
+  /**
+    Returns true if the specified CSS value contains a plain image
+      (referencing a URL). CSS values with only pure gradients of color
+      will return false.
+  */
+  hasPlainImage(cssValue: string): boolean {
+    return this.urlRegex.test(cssValue);
   };
 }
