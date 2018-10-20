@@ -21,6 +21,7 @@ class CssCode {
       * {
         border-color: ${this.colorThemes.getBackgroundHighlight()} !important;
         color: ${this.colorThemes.getBodyText()} !important;
+        mix-blend-mode: normal !important;
         text-shadow: none !important;
       }
     `, CssSpecificity.Base);
