@@ -29,6 +29,8 @@ class CssStyleDeclarations {
   */
   hasVisibleBackgroundColor(computedStyle: CSSStyleDeclaration): boolean {
     let backgroundColor: string = computedStyle.getPropertyValue('background-color');
-    return backgroundColor && backgroundColor !== 'transparent';
+    return backgroundColor
+        && backgroundColor !== 'transparent'
+        && !this.cssColorValues.isTransparentColor(backgroundColor);
   }
 }
